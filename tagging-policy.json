@@ -1,0 +1,18 @@
+{
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "name": "tagging-policy", 
+    "properties": {
+        "mode": "all",
+        "displayName": "Audits tagging of all resources",
+        "description": "This policy audits whether resources have tags and denies deployment if they do not",
+        "policyRule": {
+            "if": {
+                "field": "tags",
+                "equals": ""
+            },
+            "then": {
+                "effect": "deny"
+            }
+        }
+    }
+}
