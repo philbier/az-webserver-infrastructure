@@ -25,8 +25,8 @@ The project will consist of the following main steps:
 ### Instructions
 1. Login to your Azure Account via Azure CLI.
 2. Create a policy definition that denies the creation of resources without tag.
-    a. Deploy the policy with `az policy definition create --name tagging-policy --rules tagging-policy.rules.json` from within the directory where the Policy file is stored.
-    b. Assign the policy with `az policy assignment create --policy tagging-policy`. The output should be similar to the following screenshot.
+    2a. Deploy the policy with `az policy definition create --name tagging-policy --rules tagging-policy.rules.json` from within the directory where the Policy file is stored.
+    2b. Assign the policy with `az policy assignment create --policy tagging-policy`. The output should be similar to the following screenshot.
 
 ![Tagging-Policy](./tagging-policy.PNG)
 
