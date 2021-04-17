@@ -30,7 +30,27 @@ The project will consist of the following main steps:
 
 ![Tagging-Policy](./tagging-policy.PNG)
 
-3. Create the Terraform template for your infrastructure
+3. Create a resource group named "web-server"
+`az group create -n web-server-rg -l eastus`
+
+4. Create Azure credentials using a service principal
+`az ad sp create-for-rbac --query “{ client_id: appId, client_secret: password, tenant_id: tenant }”`
+
+5. Get your azure subscription id
+`az account show --query “{ subscription_id: id }”`
+
+6. Set the following environment variables via CLI provided by the previous outputs
+`SET  CLIENT_ID=<YOUR_CLIENT_ID>
+SET  CLIENT_SECRET=<YOUR_CLIENT_SECRET>
+SET  SUBSCRIPTION_ID=<YOUR_SUBSCRIPTION_ID>`
+
+6. Deploy the packer image "ubuntuImage.json" providing the resource group you created in step 3
+`packer build -var "managed_image_resource_group_name=web-server-rg" ubuntuImage.json`
+
+<b>Continue here</b>
+
+
+X. Create the Terraform template for your infrastructure
     * Create a resource group named "web-server" via CLI or Portal.
 
 ### Output
