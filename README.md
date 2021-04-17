@@ -40,9 +40,9 @@ The project will consist of the following main steps:
 `az account show --query “{ subscription_id: id }”`  
 
 6. Set the following environment variables via CLI provided by the previous outputs  
-`SET  CLIENT_ID=<YOUR_CLIENT_ID>  
-SET  CLIENT_SECRET=<YOUR_CLIENT_SECRET>  
-SET  SUBSCRIPTION_ID=<YOUR_SUBSCRIPTION_ID>`  
+`SET  CLIENT_ID=<YOUR_CLIENT_ID>`    
+`SET  CLIENT_SECRET=<YOUR_CLIENT_SECRET>`     
+`SET  SUBSCRIPTION_ID=<YOUR_SUBSCRIPTION_ID>`   
 
 6. Deploy the packer image "ubuntuImage.json" providing the resource group you created in step 3  
 `packer build -var "managed_image_resource_group_name=web-server-rg" ubuntuImage.json`  
