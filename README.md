@@ -10,11 +10,9 @@ To support this need and minimize future work, <b> Packer will be used to create
 #### Main Steps
 The project will consist of the following main steps:
 
-1. Creating a Packer template
-2. Creating a Terraform template
-3. Deploy a policy that denies the creation of resources that do not have tags
-4. Deploying the infrastructure
-5. Creating documentation in the form of a README
+1. Deploy the policy definition that denies the creation of resources without tags
+2. Deploy the Packer image
+3. Deploy the infrastructure using Terraform
 
 ### Dependencies
 1. Create an [Azure Account](https://portal.azure.com) 
@@ -24,52 +22,88 @@ The project will consist of the following main steps:
 
 ### Instructions
 
-Login to your Azure Account via Terminal using `az login`, `cd` to your project folder and execute the following steps:
-1. Deploy the policy definition that denies the creation of resources without tags
-2. Deploy the Packer image
-3. Deploy the infrastructure using Terraform
+Login to your Azure Account via Terminal using `az login`, `cd` into your project folder and execute the following steps:
 
 #### 1. Deploy the policy definition
+
 1. Define the policy with  
-`az policy definition create --name tagging-policy --rules tagging-policy.rules.json`  
-2. Assign the policy with  
-`az policy assignment create --policy tagging-policy`
+```bash
+az policy definition create --name tagging-policy --rules tagging-policy.rules.json
+```  
+
+2. Assign the policy with
+```bash  
+az policy assignment create --policy tagging-policy
+```
 
 The output should be similar to the following screenshot.  
 ![Tagging-Policy](./tagging-policy.PNG)
 
 #### 2. Deploy the Packer image
-1. Create a resource group for the packer images named "images-rg"  
-`az group create -n images-rg -l eastus`  
-2. Create new Azure credentials using a service principal  
-`az ad sp create-for-rbac --query “{ client_id: appId, client_secret: password, tenant_id: tenant }”`  
-3. Query your azure subscription-id  
-`az account show --query “{ subscription_id: id }”`  
-4. Set the following environment variables via CLI provided by the previous outputs  
-`SET  CLIENT_ID=<YOUR_CLIENT_ID>`    
-`SET  CLIENT_SECRET=<YOUR_CLIENT_SECRET>`     
-`SET  SUBSCRIPTION_ID=<YOUR_SUBSCRIPTION_ID>`   
+1. Create a resource group for the packer images named "images-rg" 
+```bash 
+az group create -n images-rg -l eastus
+```
+
+2. Create new Azure credentials using a service principal
+```bash 
+az ad sp create-for-rbac --query “{ client_id: appId, client_secret: password, tenant_id: tenant }”
+```  
+
+3. Query your azure subscription-id
+```bash
+az account show --query “{ subscription_id: id }”
+```
+
+4. Set the following environment variables via CLI provided by the previous outputs
+```bash  
+SET  CLIENT_ID=<YOUR_CLIENT_ID>    
+SET  CLIENT_SECRET=<YOUR_CLIENT_SECRET>     
+SET  SUBSCRIPTION_ID=<YOUR_SUBSCRIPTION_ID>
+```
+
 5. Deploy the packer image "ubuntuImage.json" providing the resource group you created in step 3  
-`packer build -var "managed_image_resource_group_name=images-rg" ubuntuImage.json`  
+```bash
+packer build -var "managed_image_resource_group_name=images-rg" ubuntuImage.json
+```  
 
 #### 3. Deploy the infrastructure using Terraform
 1. Check and change **vars.tf** file depending on your demands
-`variable "prefix" {
+```tf
+variable "prefix" {
     description = "The prefix that should be used for all resources"
     default = "web-server"
-}`
-Variables can be used as follows
-`var.prefix`
-2. Change into the Terraform directory
-`cd terraform`
-3. Initialize the Terraform environment
-`terraform init`
-4. Run the Terraform deployment
-`terraform plan -out solution.plan`
-`terraform apply "solution.plan"`
+}
+```
 
-### Output
-**Your words here**
+Variables can be used as follows
+```tf
+var.prefix
+```
+2. Change into the Terraform directory
+```bash
+cd terraform
+```
+
+3. Initialize the Terraform environment
+```bash
+terraform init
+```
+4. Run the Terraform deployment
+```bash
+terraform plan -out solution.plan
+terraform apply "solution.plan"
+```
+
+5. Check the deployment via Azure Portal or via
+```bash
+terraform show
+```
+
+6. Finally destroy the infrastructure
+```bash
+terraform destroy
+```
 
 ### License
 MIT © [philbier]()
