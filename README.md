@@ -62,13 +62,13 @@ SET  CLIENT_SECRET=<YOUR_CLIENT_SECRET>
 SET  SUBSCRIPTION_ID=<YOUR_SUBSCRIPTION_ID>
 ```
 
-5. Deploy the packer image "ubuntuImage.json" providing the resource group you created in step 3  
+5. Deploy the packer image "ubuntuImage.json" providing the resource group you created in step 2.1  
 ```bash
 packer build -var "managed_image_resource_group_name=images-rg" ubuntuImage.json
 ```  
 
 #### 3. Deploy the infrastructure using Terraform
-1. Check and change **vars.tf** file depending on your demands
+1. Check and change the **vars.tf** file depending on your demands
 ```tf
 variable "prefix" {
     description = "The prefix that should be used for all resources"
