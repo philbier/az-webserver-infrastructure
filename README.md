@@ -104,6 +104,8 @@ terraform show
 ```bash
 terraform destroy
 ```
+### Output
+![Terraform Output](./terraform_output.PNG)
 
 ### License
 MIT © [philbier]()
