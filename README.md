@@ -103,9 +103,9 @@ terraform show
 6. Finally destroy the infrastructure
 ```bash
 terraform destroy
-```
+``` 
 ### Output
-![Terraform Output](./terraform_output.PNG)
+![Terraform Output](./tf_output.PNG)
 
 ### License
 MIT © [philbier]()
